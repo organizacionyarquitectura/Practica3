@@ -1,5 +1,17 @@
-%Tipo
+% Tipo
 \documentclass{article}
+
+% Márgen
+\usepackage[margin = 1.5cm]{geometry}
+
+% Símbolos
+\usepackage{amsmath}
+
+% Controlar tablas
+\usepackage{float}
+
+% Mapas de Karnaugh
+\usepackage{karnaugh-map}
 
 \begin{document}
     \title{
@@ -23,10 +35,41 @@
         \item {
             Desarrolla un circuito que simule el comportamiento de la implicación
             lógica. Sólo puedes hacer uso de fuentes de alimentación power y 
-            ground, transistores tipo PNP y NPN y pines de entrada y salida. 
+            ground, transistores tipo PNP y NPN y pines de entrada y salida. \\
+            Como es un operador binario de valores lógicos, entonces las entradas
+            son dos variables lógicas $\in \{1, 0\}^2$ y la salida es otro valor lógico
+            $\in \{1, 0\}$.\\
+            Luego, la implicación se defina como sigue
+            \begin{table}[H]
+                \caption{Tabla de verdad de la implicación}
+                \begin{center}
+                    \begin{tabular}{|l|l|l|}
+                        \hline
+                        $p$ & $q$ & $p \implies q$ \\ \hline
+                        0   & 0   & 1              \\ \hline
+                        0   & 1   & 1              \\ \hline
+                        1   & 0   & 0              \\ \hline
+                        1   & 1   & 1              \\ \hline
+                    \end{tabular}
+                \end{center}
+            \end{table}
+            Y el mapa de Karnaugh correspondiente es 
+
+            \begin{center}
+                \begin{karnaugh-map}[2][2][1][$p$][$q$]
+                    \minterms{0,2,3}
+                    \maxterms{1}
+                    \implicant{2}{3}
+                    \implicant{0}{2}
+                \end{karnaugh-map}
+            \end{center}
+
+            Por lo que la regla de correspondencia es 
+            \[(p \implies q) = p' + q\]
+            
         }
         \item {
-            Sean $x, y \in \{1, 2, 3\}$. Desarrolla un comparador electrónico d
+            Sean $x, y \in \{0, 1, 2, 3\}$. Desarrolla un comparador electrónico d
             e 2 bits, las salidas del comparador deben ser
             \begin{itemize}
                 \item {
@@ -37,6 +80,84 @@
                 }
                 \item {
                     $x>y$
+                }
+            \end{itemize}
+            Podemos considerar los números del 0 al 3 en su representación 
+            binaria. Como sólo son dos dígitos, entonces cada número puede ser 
+            representado con dos variables lógicas, lo que da un total de 4 
+            variables lógicas, una para cada bit de cada número. \\
+            Y a su vez, hay tres salidas, una por cada relación que hay que 
+            modelar.
+
+            \begin{table}[H]
+                \caption{Tabla de verdad de las relaciones anteriores}
+                \begin{center}
+                    \begin{tabular}{|l|l|l|l|l|l|l|}
+                        \hline
+                        $a$ & $b$ & $c$ & $d$ & $ab<cd$ & $ab=cd$ & $ab>cd$ \\ \hline
+                        0   & 0   & 0   & 0   & 0       & 1       & 0       \\ \hline
+                        0   & 0   & 0   & 1   & 1       & 0       & 0       \\ \hline
+                        0   & 0   & 1   & 0   & 1       & 0       & 0       \\ \hline
+                        0   & 0   & 1   & 1   & 1       & 0       & 0       \\ \hline
+                        0   & 1   & 0   & 0   & 0       & 0       & 1       \\ \hline
+                        0   & 1   & 0   & 1   & 0       & 1       & 0       \\ \hline
+                        0   & 1   & 1   & 0   & 1       & 0       & 0       \\ \hline
+                        0   & 1   & 1   & 1   & 1       & 0       & 0       \\ \hline
+                        1   & 0   & 0   & 0   & 0       & 0       & 1       \\ \hline
+                        1   & 0   & 0   & 1   & 0       & 0       & 1       \\ \hline
+                        1   & 0   & 1   & 0   & 0       & 1       & 0       \\ \hline
+                        1   & 0   & 1   & 1   & 1       & 0       & 0       \\ \hline
+                        1   & 1   & 0   & 0   & 0       & 0       & 1       \\ \hline
+                        1   & 1   & 0   & 1   & 0       & 0       & 1       \\ \hline
+                        1   & 1   & 1   & 0   & 0       & 0       & 1       \\ \hline
+                        1   & 1   & 1   & 1   & 0       & 1       & 0       \\ \hline
+                    \end{tabular}
+                \end{center}
+            \end{table}
+            Los mapas de Karnaugh correspondientes son
+            \begin{itemize}
+                \item {
+                    Igualdad 
+                    \begin{center}
+                        \begin{karnaugh-map}[4][4][1][$ab$][$cd$]
+                            \minterms{0, 5, 10, 15}
+                            \maxterms{1, 2, 3, 4, 6, 7, 8, 9, 11, 12, 13, 14}
+                            \implicant{0}{0}
+                            \implicant{5}{5}
+                            \implicant{10}{10}
+                            \implicant{15}{15}
+                        \end{karnaugh-map}
+                    \end{center}
+                    Por lo que la regla de correspondencia es 
+                    \[(ab = cd) = a'b'c'd' + a'bc'd + abcd + ab'cd'\]
+                }
+                \item {
+                    Menor que
+                    \begin{center}
+                        \begin{karnaugh-map}[4][4][1][$ab$][$cd$]
+                            \minterms{1, 2, 3, 6, 7, 11}
+                            \maxterms{0, 4, 5, 8, 9, 10, 12, 13, 14, 15}
+                            \implicant{3}{6}
+                            \implicant{1}{3}
+                            \implicantedge{3}{3}{11}{11}
+                        \end{karnaugh-map}
+                    \end{center}
+                    Por lo que la regla de correspondencia es 
+                    \[(ab < cd) = ac' + bc'd' + abd' \]
+                }
+                \item {
+                    Mayor que
+                    \begin{center}
+                        \begin{karnaugh-map}[4][4][1][$ab$][$cd$]
+                            \minterms{4, 8, 9, 12, 13, 14}
+                            \maxterms{0, 1, 2, 3, 5, 6, 7, 10, 11, 15}
+                            \implicant{12}{9}
+                            \implicant{4}{12}
+                            \implicantedge{12}{12}{14}{14}
+                        \end{karnaugh-map}
+                    \end{center}
+                    Por lo que la regla de correspondencia es 
+                    \[(ab < cd) = a'c + b'cd + a'b'd \]
                 }
             \end{itemize}
         }
