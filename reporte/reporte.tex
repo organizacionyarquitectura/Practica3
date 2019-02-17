@@ -169,14 +169,48 @@
         \item {
             ¿Cuál es el procedimiento a seguir para desarrollar un circuito que 
             recuelva un problema que involucre lógica combinacional?
+            \begin{enumerate}
+                \item {
+                    Identificar las variables lógicas de entrada y las salidas 
+                    lógicas.
+                }
+                \item {
+                    Construir la tabla de verdad del circuito.
+                }
+                \item {
+                    Minimizar la expresión que representa la tabla de verdad. 
+                    Esto se puede hacer usando manipulación algebraica, mapas de 
+                    Karnaugh, el algoritmo de Quine-McCluskey o el método de 
+                    Expreso.
+                }
+                \item {
+                    Diseñar o especificar el circuito correspondiente a la 
+                    expresión minimizada.
+                }
+            \end{enumerate}
         }
         \item {
             Si una función de conmutación se evalua a más ceros que unos, ¿es
-            conveniento usar mintérminos o maxtérminos? ¿Y en caso contrario?
+            conveniento usar mintérminos o maxtérminos? ¿Y en caso contrario? \\
+            Si se toman mintérminos, entonces la cantidad de términos en la 
+            expresión es la misma que la cantidad de casos donde la función es 1.
+            Si se usan maxtérminos, entonces esta cantidad es la misma que la 
+            cantidad de casos donde la función es 0. \\
+            Por lo que si hay más unos, la expresión quedará más corta si se 
+            usan maxtérminos, y si hay más ceros, quedará más corta usando 
+            mintérminos. \\
+            Aunque si se minimiza la expresión, se debería obtener algo más o 
+            menos del mismo tamaño sin importar si se inició con mintérminos o 
+            maxtérminos.
         }
         \item {
             En base al trabajo realizado, ¿cuáles son los inconvenientes de 
-            desarrollo de circuitos de forma manual?
+            desarrollo de circuitos de forma manual? \\
+            El proceso de representación por expresiones y el proceso de 
+            minimización es tedioso, y la complejidad de los patrones y longitud
+            de las expresiones aumenta exponensialmente con el número de 
+            variables. Entonces, hay un punto en el que no es viable hacerlo a 
+            mano.
         }
     \end{enumerate}
 \end{document}
